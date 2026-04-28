@@ -66,10 +66,12 @@ jobs:
     - name: 检查缓存
       id: check-cache
       if: env.WRT_TEST != 'true'
-      uses: actions/cache@v3
+      uses: actions/cache@main
       with:
-        key: openwrt-${{ env.REPO_BRANCH }}-ax6000-${{ hashFiles('openwrt/.config') }}
-        restore-keys: openwrt-${{ env.REPO_BRANCH }}-ax6000-
+        key: openwrt-${{ env.REPO_BRANCH }}-ax6000-${{ hashFiles('.config') }}-${{ github.run_id }}
+        restore-keys: |
+          openwrt-${{ env.REPO_BRANCH }}-ax6000-${{ hashFiles('.config') }}-
+          openwrt-${{ env.REPO_BRANCH }}-ax6000-
         path: |
           /mnt/build_wrt/openwrt/.ccache
           /mnt/build_wrt/openwrt/staging_dir/host
@@ -77,6 +79,8 @@ jobs:
 
     - name: 清理失效缓存
       if: steps.check-cache.outputs.cache-hit != 'true'
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         CACHE_LIST=$(gh cache list --key "openwrt-${REPO_BRANCH}-ax6000-" | cut -f 1)
         for CACHE_KEY in $CACHE_LIST; do
@@ -130,7 +134,7 @@ jobs:
 
     - name: 保存缓存
       if: always()
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         key: openwrt-${{ env.REPO_BRANCH }}-ax6000-${{ hashFiles('openwrt/.config') }}
         path: |
@@ -152,7 +156,7 @@ jobs:
         echo "ORGANIZE_STATUS=success" >> $GITHUB_ENV
       
     - name: 上传固件到 artifact
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v4
       if: env.ORGANIZE_STATUS == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
         name: OpenWrt_firmware_${{ env.DEVICE_NAME }}
