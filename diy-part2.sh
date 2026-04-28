@@ -102,3 +102,5 @@ echo "CONFIG_PACKAGE_luci-app-upnp=y" >> .config
 #echo "CONFIG_PACKAGE_luci-app-adguardhome=y" >> .config
 echo "CONFIG_PACKAGE_luci-app-dockerman=y" >> .config
 #echo "CONFIG_PACKAGE_luci-app-netspeedtest=y" >> .config
+##-----------------Manually set CPU frequency for MT7986A-----------------
+sed -i '/"mediatek"\/\*|\"mvebu"\/\*/{n; s/.*/\tcpu_freq="2.0GHz" ;;/}' package/emortal/autocore/files/generic/cpuinfo
