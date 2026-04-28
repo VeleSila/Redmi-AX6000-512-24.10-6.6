@@ -39,21 +39,21 @@ sed -i 's/reg = <0x600000 0x6e00000>/reg = <0x600000 0x1ea00000>/' target/linux/
 # Theme
 rm -rf feeds/luci/themes/luci-theme-argon
 rm -rf feeds/luci/applications/luci-app-argon-config
-git clone https://github.com/sbwml/luci-theme-argon -b openwrt-24.10 package/argon
+git clone --depth 1 https://github.com/sbwml/luci-theme-argon -b openwrt-24.10 package/argon
 #git clone https://github.com/sirpdboy/luci-theme-kucat package/luci-theme-kucat
 # 网速测试
 #git clone https://github.com/sirpdboy/luci-app-netspeedtest package/netspeedtest
 # 主题高级设置
 #git clone https://github.com/sirpdboy/luci-app-advancedplus package/luci-app-advancedplus
 # adguardhome
-git clone https://github.com/F-57/luci-app-adguardhome package/luci-app-adguardhome
+#git clone https://github.com/F-57/luci-app-adguardhome package/luci-app-adguardhome
 # 安装 mosdns
 rm -rf feeds/packages/lang/golang
 rm -rf feeds/packages/net/mosdns
 rm -rf package/feeds/packages/mosdns
 rm -rf feeds/packages/net/v2ray-geodata
 rm -rf package/feeds/packages/v2ray-geodata
-git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
+git clone --depth 1 https://github.com/sbwml/packages_lang_golang -b 26.x feeds/packages/lang/golang
 #git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 # 安装 luci-app-openlist2 
@@ -63,13 +63,13 @@ git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 # 安装lucky
 #git clone https://github.com/sirpdboy/luci-app-lucky package/lucky
 # 安装 OpenClash
-git clone --depth 1 https://github.com/vernesong/openclash.git OpenClash
-rm -rf feeds/luci/applications/luci-app-openclash
-mv OpenClash/luci-app-openclash feeds/luci/applications/luci-app-openclash
+# git clone --depth 1 https://github.com/vernesong/openclash.git OpenClash
+# rm -rf feeds/luci/applications/luci-app-openclash
+# mv OpenClash/luci-app-openclash feeds/luci/applications/luci-app-openclash
 
 # 更改菜单名字
-echo -e "\nmsgid \"OpenClash\"" >> feeds/luci/applications/luci-app-openclash/po/zh-cn/openclash.zh-cn.po
-echo -e "msgstr \"科学上网\"" >> feeds/luci/applications/luci-app-openclash/po/zh-cn/openclash.zh-cn.po
+# echo -e "\nmsgid \"OpenClash\"" >> feeds/luci/applications/luci-app-openclash/po/zh-cn/openclash.zh-cn.po
+# echo -e "msgstr \"科学上网\"" >> feeds/luci/applications/luci-app-openclash/po/zh-cn/openclash.zh-cn.po
 
 #echo -e "\nmsgid \"MosDNS\"" >> package/mosdns/luci-app-mosdns/po/zh_Hans/mosdns.po
 #echo -e "msgstr \"转发分流\"" >> package/mosdns/luci-app-mosdns/po/zh_Hans/mosdns.po
@@ -81,10 +81,11 @@ echo -e "msgstr \"科学上网\"" >> feeds/luci/applications/luci-app-openclash/
 #echo -e "msgstr \"聚合网盘\"" >> package/openlist/luci-app-openlist2/po/zh_Hans/openlist2.po
 
 echo -e "\nmsgid \"UPnP IGD & PCP\"" >> feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
-echo -e "msgstr \"即插即用\"" >> feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
+echo -e "msgstr \"UPnP\"" >> feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
 
 echo -e "\nmsgid \"Docker\"" >> package/feeds/luci/luci-app-dockerman/po/zh_Hans/dockerman.po
-echo -e "msgstr \"容器\"" >> package/feeds/luci/luci-app-dockerman/po/zh_Hans/dockerman.po
+echo -e "msgstr \"Docker\"" >> package/feeds/luci/luci-app-dockerman/po/zh_Hans/dockerman.po
+
 # 软件包与配置
 echo "CONFIG_CCACHE=y" >> .config
 echo "CONFIG_PACKAGE_luci-app-argon=y" >> .config
@@ -92,12 +93,12 @@ echo "CONFIG_PACKAGE_luci-app-argon-config=y" >> .config
 #echo "CONFIG_PACKAGE_luci-theme-kucat=y" >> .config
 #echo "CONFIG_PACKAGE_luci-app-advancedplus=y" >> .config
 #echo "CONFIG_PACKAGE_luci-app-openlist2=y" >> .config
-echo "CONFIG_PACKAGE_luci-app-openclash=y" >> .config
+#echo "CONFIG_PACKAGE_luci-app-openclash=y" >> .config
 #echo "CONFIG_PACKAGE_luci-app-mosdns=y" >> .config
 #echo "CONFIG_PACKAGE_luci-app-lucky=y" >> .config
 #echo "CONFIG_PACKAGE_luci-app-airconnect=y" >> .config
 #echo "CONFIG_PACKAGE_luci-app-wechatpush=y" >> .config
 echo "CONFIG_PACKAGE_luci-app-upnp=y" >> .config
-echo "CONFIG_PACKAGE_luci-app-adguardhome=y" >> .config
+#echo "CONFIG_PACKAGE_luci-app-adguardhome=y" >> .config
 echo "CONFIG_PACKAGE_luci-app-dockerman=y" >> .config
 #echo "CONFIG_PACKAGE_luci-app-netspeedtest=y" >> .config
