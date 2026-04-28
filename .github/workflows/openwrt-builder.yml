@@ -66,7 +66,7 @@ jobs:
     - name: 检查缓存
       id: check-cache
       if: env.WRT_TEST != 'true'
-      uses: actions/cache@v4
+      uses: actions/cache@main
       with:
         key: openwrt-${{ env.REPO_BRANCH }}-ax6000-${{ hashFiles('.config') }}-${{ github.run_id }}
         restore-keys: |
@@ -134,7 +134,7 @@ jobs:
 
     - name: 保存缓存
       if: always()
-      uses: actions/cache@v4
+      uses: actions/cache@main
       with:
         key: openwrt-${{ env.REPO_BRANCH }}-ax6000-${{ hashFiles('openwrt/.config') }}
         path: |
@@ -156,7 +156,7 @@ jobs:
         echo "ORGANIZE_STATUS=success" >> $GITHUB_ENV
       
     - name: 上传固件到 artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@main
       if: env.ORGANIZE_STATUS == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
         name: OpenWrt_firmware_${{ env.DEVICE_NAME }}
@@ -180,14 +180,3 @@ jobs:
             Default Wi-Fi: AX6000
             Default username: root
             Default password: 无
-            
-    - name: 删除旧版本
-      uses: dev-drprasad/delete-older-releases@master
-      if: env.ORGANIZE_STATUS == 'success' && !cancelled()
-      with:
-        repo: ${{ github.repository }}
-        keep_latest: 2
-        delete_tag_pattern: 'redmi_ax6000'
-        delete_tags: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
